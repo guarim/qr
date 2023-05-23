@@ -67,22 +67,15 @@ AFRAME.registerComponent('registerevents', {
 
 </script>
 
-<a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
-
-    <a-assets>
-		<img id="grid" src="images/border.png" />
-		<img id="earth-flat" src="images/earth-flat.jpg" />
-		<img id="earth-sphere" src="images/earth-sphere.jpg" />
-	</a-assets>
     
     <a-marker type="pattern" url="data/kanji.patt" id="baseMarker" registerevents>
 	<a-entity id="follower" active="0">
        	 <a-box id="baseMarker" registerevents position="0 0.5 0" 
                material="color: red; transparent: true; opacity: 0.50;">
        	 </a-box>
+	</a-entity>	
     </a-marker>
-    
-   
+      
     
     <a-entity camera></a-entity>
     
