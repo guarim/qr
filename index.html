@@ -75,10 +75,11 @@ AFRAME.registerComponent('registerevents', {
 		<img id="earth-sphere" src="images/earth-sphere.jpg" />
 	</a-assets>
     
-    <a-marker type="pattern" url="data/kanji.patt">
-        <a-box position="0 0.5 0" 
+    <a-marker type="pattern" url="data/kanji.patt" id="baseMarker" registerevents>
+	<a-entity id="follower" active="0">
+       	 <a-box id="baseMarker" registerevents position="0 0.5 0" 
                material="color: red; transparent: true; opacity: 0.50;">
-        </a-box>
+       	 </a-box>
     </a-marker>
     
    
