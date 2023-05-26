@@ -1,84 +1,352 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<script src="js/aframe.min.js"></script>
-<script src="js/aframe-ar.js"></script>
-<body style="margin: 0px; overflow: hidden;">
-  
-<!-- set detectionMode and matrixCodeType to enable barcode marker detection and custom pattern files -->
+<head>
+	<title>three-mesh-ui | examples</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+
+		:root {
+			--navbar-height: 60px;
+			--dark-colour: #262626;
+			--github-btn-offset: 20px;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: "Courier New", Courier, monospace;
+			color: var(--dark-colour);
+			box-sizing: border-box;
+		}
+
+		body {
+			overflow: hidden;
+		}
+
+		h1 {
+			font-size: 1.75em;
+			font-weight: 600;
+		}
+
+		h2 {
+			font-size: 1.4em;
+			font-weight: 600;
+		}
+
+		#page {
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			display: flex;
+		}
+
+		#menu {
+			position: relative;
+			height: 100%;
+			min-width: 270px;
+			border-right: solid 1px var(--dark-colour);
+			transition: height 0.26s;
+			overflow-y: auto;
+		}
+
+		li {
+			font-size: 1.1em;
+			padding: 4px 10px;
+			margin: 10px 0;
+			border-radius: 3px;
+		}
+
+			li:hover {
+				cursor: pointer;
+				background-color: #e6e6e6;
+			}
+
+			li.selected-view {
+				background-color: var(--dark-colour);
+				color: #ffffff;
+			}
+
+		ul {
+			margin-top: 10px;
+			border-top: solid 1px var(--dark-colour);
+			list-style-type: none;
+		}
+
+			#example-code-icon {
+				width: 25px;
+				margin-right: 10px;
+			}
+
+		#github-link-menu {
+			display: flex;
+			align-items: center;
+			color: white;
+			background-color: var(--dark-colour);
+			text-decoration: none;
+			margin: 8px 0 30px 0;
+			padding: 5px 10px;
+			font-size: 1.1em;
+			box-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+			border-radius: 3px;
+		}
+
+			#menu-icon {
+				width: 28px;
+				margin-right: 10px;
+			}
+
+		#iframe-container {
+			position: relative;
+			height: 100%;
+			width: 100%;
+			background-color: grey;
+		}
+
+			#iframe-container>iframe {
+				position: relative;
+				height: 100%;
+				width: 100%;
+				z-index: 1;
+			}
+
+			#iframe-container>img {
+				position: absolute;
+				height: 50px;
+				width: 50px;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+
+			#iframe-container>a {
+				position: absolute;
+				display: flex;
+				align-items: center;
+				right: var(--github-btn-offset);
+				bottom: 20px;
+				z-index: 2;
+				color: white;
+				background-color: var(--dark-colour);
+				text-decoration: none;
+				padding: 5px 10px;
+				font-size: 1.1em;
+				box-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+				border-radius: 3px;
+			}
+
+				#iframe-container>a:hover {
+					background-color: #424242;
+				}
+
+		#examples-container {
+			padding: 20px;
+			max-height: calc( 100% - 60px );
+			overflow-y: auto;
+		}
+
+		#navbar-container {
+			display: none;
+			top: 0;
+			left: 0;
+			height: 60px;
+			width: 100%;
+			border-bottom: solid 1px var(--dark-colour);
+			justify-content: flex-end;
+			align-items: center;
+		}
+
+		button {
+			background-color: #e0e0e0;
+			border: none;
+			padding: 9px 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			outline: none;
+			margin-right: 15px;
+			box-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.75);
+			transition: box-shadow 0.12s;
+		}
+
+			button:active {
+				box-shadow: none;
+			}
+
+		@media screen and (max-width: 768px) {
+
+			#page {
+				flex-direction: column;
+			}
+
+			#menu {
+				height: var(--navbar-height);
+				width: 100%;
+				border-right: none;
+				overflow-y: hidden;
+			}
+
+			#navbar-container {
+				display: flex;
+			}
+
+			#iframe-container {
+				height: calc( 100% - var(--navbar-height) );
+				width: 100vw;
+			}
+
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div id="page">
+
+		<div id="menu">
+
+			<div id="navbar-container">
+				<button id="toggle-btn" onclick="toggleNavbar()">
+					more examples ▼
+				</button>
+			</div>
+
+			<div id="examples-container">
+				<h1>three-mesh-ui</h1>
+				<a
+				id="github-link-menu"
+				href="https://github.com/felixmariotto/three-mesh-ui"
+				target="_blank"
+				>
+					<img id="menu-icon" src="https://felixmariotto.s3.eu-west-3.amazonaws.com/github-white-icon.png">
+					Github page
+				</a>
+
+				<h2>examples</h2>
+				<ul>
+					<%= htmlWebpackPlugin.options.pages %>
+				</ul>
+			</div>
+
+		</div>
+
+		<div id="iframe-container">
+
+			<iframe
+			src="./basic_setup.html"
+			allowfullscreen
+			allowvr
+			frameBorder="0"
+			></iframe>
+
+			<img src="https://felixmariotto.s3.eu-west-3.amazonaws.com/loading-three-mesh-ui.gif">
+
+			<a
+			id="github-link"
+			href=""
+			target="_blank"
+			>
+				<img id="example-code-icon" src="https://felixmariotto.s3.eu-west-3.amazonaws.com/github-white-icon.png">
+				code on Github
+			</a>
+
+		</div>
+
+	</div>
+
 	<script>
 
-let markerVisible = false;
+		const root = document.documentElement;
+		const btn = document.getElementById('toggle-btn');
+		const link = document.getElementById('github-link');
+		const iframe = document.querySelector('iframe');
 
-AFRAME.registerComponent('registerevents', {
-    init: function () 
-    {
-        let marker = this.el;
-        let follower = document.querySelector("#follower");
-        let followerPlane = document.querySelector("#followerPlane");
-        
-        marker.addEventListener('markerFound', function() {
-            // check if marker is found for the first time;
-            //  if so, make object visible and align position/rotation.
-            if ( follower.getAttribute("active") == "0" )
-            {
-                follower.setAttribute("active", "1");
-                followerPlane.setAttribute("material", "visible", "true");   
-            }
-            markerVisible = true;
-        });
+		let navbarIsClosed = true;
 
-        marker.addEventListener('markerLost', function() {
-            markerVisible = false;
-        });
-        
-        this.p = new THREE.Vector3();
-        this.q = new THREE.Quaternion();
-        this.s = new THREE.Vector3();   
-    },
-    
-    tick: function (time, deltaTime) 
-    {
-        // if marker is visible, align the entity to the marker
-        if (markerVisible)
-        {
-            let marker = this.el;
-            let follower = document.querySelector("#follower");
-            let followerPlane = document.querySelector("#followerPlane");
+		const hash = window.location.hash.substr(1);
 
-            let lerpAmount = 0.5;
+		if ( hash === "" ) window.location.hash = "basic_setup";
 
-            marker.object3D.getWorldPosition(this.p);
-			marker.object3D.getWorldQuaternion(this.q);
-			marker.object3D.getWorldScale(this.s);
+		// let hash = window.location.hash.substring(1);
+		//console.log( hash )
+		
+		function toggleNavbar() {
 
-			follower.object3D.position.lerp(this.p, lerpAmount);
-            follower.object3D.quaternion.slerp(this.q, lerpAmount);
-			follower.object3D.scale.lerp(this.s, lerpAmount);
-            
-            followerPlane.setAttribute("color", "");
-        } 
-        else
-        {
-            followerPlane.setAttribute("color", "");            
-        }
-    }
-});
+			if ( navbarIsClosed ) {
 
-</script>
+				root.style.setProperty('--navbar-height', '100%');
+				root.style.setProperty('--github-btn-offset', '-300px');
+				btn.innerHTML = "hide examples ▲";
 
-    
-    <a-marker type="pattern" url="data/kanji.patt" id="baseMarker" registerevents>
-	<a-entity id="follower" active="0">
-       	 <a-box id="baseMarker" registerevents position="0 0.5 0" 
-               material="color: red; transparent: true; opacity: 0.50;">
-       	 </a-box>
-	</a-entity>	
-    </a-marker>
-      
-    
-    <a-entity camera></a-entity>
-    
-</a-scene>
+			} else {
+
+				root.style.setProperty('--navbar-height', '60px');
+				root.style.setProperty('--github-btn-offset', '20px');
+				btn.innerHTML = "more examples ▼";
+
+			};
+
+			navbarIsClosed = !navbarIsClosed
+
+		};
+
+		//
+
+		document.querySelectorAll('li').forEach( (node)=> {
+
+			if ( node.title === hash ) selectView( node );
+
+			node.onclick = ()=> {
+
+				selectView( node );
+
+				if ( !navbarIsClosed ) {
+					toggleNavbar();
+				};
+
+			};
+
+		});
+
+		//
+
+		window.addEventListener('popstate', () => {
+
+			let hash = window.location.hash.substring(1);
+
+			iframe.src = `./${ hash }.html`;
+
+			link.href = `https://github.com/felixmariotto/three-mesh-ui/blob/master/examples/${ hash }.js`
+
+		})
+
+		//
+
+		function selectView( listItem ) {
+
+			iframe.src = `./${ listItem.title }.html`;
+			link.href = `https://github.com/felixmariotto/three-mesh-ui/blob/master/examples/${ listItem.title }.js`
+
+			window.location.hash = listItem.title;
+	
+			document.querySelectorAll('li').forEach( (node)=> {
+
+				if ( node === listItem ) {
+
+					node.classList.add('selected-view');
+
+				} else {
+
+					node.classList.remove('selected-view');
+
+				};
+
+			});
+
+		};
+
+	</script>
+
 </body>
 </html>
